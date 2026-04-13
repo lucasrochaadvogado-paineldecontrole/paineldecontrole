@@ -780,6 +780,22 @@ select option{background:var(--surface2);color:var(--text)}
 const SUPA_URL='https://rsbthbxieuzuchnrffav.supabase.co';
 const SUPA_KEY='sb_publishable_udTiJnwDv23oYXnJgyjFUA_K0wo7epv';
 const{createClient}=supabase;
+
+  const stored = Object.keys(localStorage).find(k => k.includes('supabase'));
+  if(stored) {
+    const val = localStorage.getItem(stored);
+    if(val && val.includes('error')) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  }
+  const loadStart = Date.now();
+  window._loadTimeout = setTimeout(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+    document.getElementById('loading-screen').innerHTML = '<div style="text-align:center"><div class="logo-mark">LR</div><p style="color:#E8A020;margin-top:1rem">Sessão expirada</p><button onclick="localStorage.clear();sessionStorage.clear();location.reload()" style="margin-top:1rem;padding:10px 24px;background:#E8A020;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px">Entrar novamente</button></div>';
+  }, 5000);
+
 const db=createClient(SUPA_URL,SUPA_KEY);
 
 let currentUser=null;
@@ -844,6 +860,7 @@ db.auth.onAuthStateChange(async(event,session)=>{
     loading.style.display='none';
     appEl.style.display='flex';
     appEl.classList.add('ready');
+    clearTimeout(window._loadTimeout);
     renderAgenda();
   }else{
     loading.style.display='none';
