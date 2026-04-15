@@ -279,29 +279,8 @@ select option{background:var(--surface2);color:var(--text)}
 .cal-placeholder h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text2);margin-bottom:.5rem}
 .cal-placeholder p{font-size:13px;color:var(--text3);line-height:1.6;max-width:360px;margin:0 auto}
 
-/* ══ MODAL ══ */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:600;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
-.modal-overlay.hidden{display:none}
-.modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.6)}
-.modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.25rem .875rem;border-bottom:1px solid var(--border)}
-.modal-hdr h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;letter-spacing:-.3px;text-transform:uppercase}
-.modal-close{background:none;border:none;cursor:pointer;color:var(--text3);font-size:24px;line-height:1;padding:0;transition:color .15s}
-.modal-close:hover{color:var(--red)}
-.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:14px}
-.modal-footer{padding:.875rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
-.fg-full{display:flex;flex-direction:column;gap:5px;width:100%}
-.fg-full label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
-.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:500px){.modal-grid{grid-template-columns:1fr}}
-textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',sans-serif;font-size:13px}
-
-/* ══ CLIENTES ══ */
-.cli-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.875rem 1rem;display:flex;align-items:center;gap:10px;margin-bottom:6px}
-.cli-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;flex-shrink:0}
-.cli-info{flex:1;min-width:0}
-.cli-name{font-size:14px;font-weight:600;color:var(--text)}
-.cli-meta{font-size:11px;color:var(--text3);margin-top:2px}
-
+/* ══ SECTIONS ══ */
+.sec{display:none}.sec.active{display:block}
 .mod-sec{display:none}.mod-sec.active{display:block}
 
 /* ══ RESPONSIVE ══ */
@@ -409,10 +388,6 @@ textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',san
       <button class="nav-item" onclick="nav('familia')"><div class="ndot" style="background:#E84040"></div>Família</button>
       <button class="nav-item" onclick="nav('outros')"><div class="ndot" style="background:#5A5A58"></div>Outros</button>
     </div>
-    <div class="sb-section">
-      <div class="sb-label">Gestão</div>
-      <button class="nav-item" onclick="nav('clientes')"><div class="ndot" style="background:#A060E8"></div>Clientes</button>
-    </div>
   </div>
   <div style="padding:.75rem 1.25rem;border-top:1px solid var(--border)">
     <div style="font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.08em" id="sb-date"></div>
@@ -459,10 +434,6 @@ textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',san
       <button class="nav-item" onclick="nav('familia');closeDrawer()"><div class="ndot" style="background:#E84040"></div>Família</button>
       <button class="nav-item" onclick="nav('outros');closeDrawer()"><div class="ndot" style="background:#5A5A58"></div>Outros</button>
     </div>
-    <div class="sb-section">
-      <div class="sb-label">Gestão</div>
-      <button class="nav-item" onclick="nav('clientes');closeDrawer()"><div class="ndot" style="background:#A060E8"></div>Clientes</button>
-    </div>
   </div>
 </div>
 
@@ -471,10 +442,23 @@ textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',san
 
 <!-- AGENDA -->
 <div class="sec active" id="sec-agenda">
-  <div class="page-hdr"><div class="page-hdr-l"><div class="accent-line"></div><h2>Agenda semanal</h2><p id="ag-sub"></p></div>
-    <button class="btn btn-p" onclick="openTaskModal()">+ Nova tarefa</button>
-  </div>
+  <div class="page-hdr"><div class="page-hdr-l"><div class="accent-line"></div><h2>Agenda semanal</h2><p id="ag-sub"></p></div></div>
   <div class="metrics" id="ag-metrics"></div>
+  <div class="card card-accent">
+    <div class="card-title">Nova tarefa</div>
+    <div class="form-row">
+      <div class="fg" style="flex:2;min-width:140px"><label>Tarefa</label><input type="text" id="t-nome" placeholder="O que precisa ser feito?"></div>
+      <div class="fg" style="width:145px"><label>Data</label><input type="date" id="t-data"></div>
+      <div class="fg" style="width:180px"><label>Frente</label>
+        <select id="t-frente">
+          <option>Rubim & Rocha</option><option>Harrison Leite</option><option>Máxima</option>
+          <option>CT Super Ação</option><option>CT Rocha</option><option>Sítio</option>
+          <option>Imóvel</option><option>Hábito</option><option>Família</option><option>Outros</option>
+        </select>
+      </div>
+      <div class="fg"><label style="opacity:0">ok</label><button class="btn btn-p" onclick="addTask()">+ Adicionar</button></div>
+    </div>
+  </div>
   <div class="week-nav">
     <button class="btn btn-sm" onclick="moveWeek(-1)">← Ant.</button>
     <div class="week-lbl" id="week-lbl"></div>
@@ -504,13 +488,9 @@ textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',san
 <!-- CALENDÁRIO -->
 <div class="sec" id="sec-calendario">
   <div class="page-hdr"><div class="page-hdr-l"><div class="accent-line"></div><h2>Calendário</h2><p>Google Calendar integrado</p></div></div>
-  <div class="cal-placeholder">
-    <div class="cal-placeholder-icon">📅</div>
-    <h3>Sincronização com Google Calendar</h3>
-    <p>Para ativar, acesse <strong style="color:var(--accent)">console.cloud.google.com</strong>, crie um projeto, ative a Calendar API e adicione as credenciais aqui. Me peça o passo a passo quando estiver pronto.</p>
-    <div style="margin-top:1.25rem">
-      <button class="btn btn-p btn-sm" onclick="showToastMsg('Em breve! Peça o passo a passo ao Claude.')">Como configurar →</button>
-    </div>
+  <div class="card card-accent" style="margin-bottom:1rem">
+    <div class="card-title">Google Calendar — próximos 30 dias</div>
+    <div id="gcal-events"><div style="font-size:13px;color:var(--text3)">Carregando eventos...</div></div>
   </div>
   <div class="card" style="margin-top:1rem">
     <div class="card-title">Próximos compromissos (agenda manual)</div>
@@ -774,21 +754,6 @@ textarea.modal-textarea{resize:vertical;min-height:72px;font-family:'Barlow',san
     </div>
   </div>
 </div>
-<!-- CLIENTES -->
-<div class="sec" id="sec-clientes">
-  <div class="page-hdr"><div class="page-hdr-l"><div class="accent-line"></div><h2>Clientes</h2><p>Rubim &amp; Rocha · Harrison Leite · Todas as frentes</p></div>
-    <button class="btn btn-p" onclick="openClienteModal()">+ Novo cliente</button>
-  </div>
-  <div class="filter-row" id="cli-filtros">
-    <button class="fpill active" onclick="filterClientes('Todas',this)">Todas</button>
-    <button class="fpill" onclick="filterClientes('Rubim & Rocha',this)">Rubim &amp; Rocha</button>
-    <button class="fpill" onclick="filterClientes('Harrison Leite',this)">Harrison Leite</button>
-    <button class="fpill" onclick="filterClientes('Máxima',this)">Máxima</button>
-    <button class="fpill" onclick="filterClientes('Outros',this)">Outros</button>
-  </div>
-  <div class="metrics" id="cli-metrics"></div>
-  <div id="clientes-lista"></div>
-</div>
 
 </main>
 </div>
@@ -812,23 +777,22 @@ const SUPA_URL='https://rsbthbxieuzuchnrffav.supabase.co';
 const SUPA_KEY='sb_publishable_udTiJnwDv23oYXnJgyjFUA_K0wo7epv';
 const{createClient}=supabase;
 
-// Limpa apenas tokens com erro real (não limpa sessão válida ao trocar de aba)
-const stored = Object.keys(localStorage).find(k => k.includes('supabase'));
-if(stored) {
-  try {
-    const val = JSON.parse(localStorage.getItem(stored));
-    if(val && val.error) { localStorage.removeItem(stored); }
-  } catch(e) {}
-}
-
-const db=createClient(SUPA_URL,SUPA_KEY,{
-  auth:{
-    persistSession:true,
-    autoRefreshToken:true,
-    detectSessionInUrl:true,
-    storageKey:'lr-painel-auth'
+  const stored = Object.keys(localStorage).find(k => k.includes('supabase'));
+  if(stored) {
+    const val = localStorage.getItem(stored);
+    if(val && val.includes('error')) {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
-});
+  const loadStart = Date.now();
+  window._loadTimeout = setTimeout(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+    document.getElementById('loading-screen').innerHTML = '<div style="text-align:center"><div class="logo-mark">LR</div><p style="color:#E8A020;margin-top:1rem">Sessão expirada</p><button onclick="localStorage.clear();sessionStorage.clear();location.reload()" style="margin-top:1rem;padding:10px 24px;background:#E8A020;color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:14px">Entrar novamente</button></div>';
+  }, 5000);
+
+const db=createClient(SUPA_URL,SUPA_KEY);
 
 let currentUser=null;
 
@@ -878,14 +842,11 @@ async function doLogout(){
   document.getElementById('loading-screen').style.display='none';
 }
 
-let _appLoaded=false;
-
-async function initApp(session){
+db.auth.onAuthStateChange(async(event,session)=>{
   const loading=document.getElementById('loading-screen');
   const loginWrap=document.getElementById('login-wrap');
   const appEl=document.getElementById('app');
   if(session?.user){
-    if(_appLoaded) return;
     currentUser=session.user;
     loginWrap.style.display='none';
     loading.style.display='flex';
@@ -895,28 +856,13 @@ async function initApp(session){
     loading.style.display='none';
     appEl.style.display='flex';
     appEl.classList.add('ready');
-    _appLoaded=true;
+    clearTimeout(window._loadTimeout);
     renderAgenda();
   }else{
     loading.style.display='none';
     appEl.style.display='none';
     appEl.classList.remove('ready');
     loginWrap.style.display='flex';
-  }
-}
-
-// Inicializa imediatamente com getSession (sem esperar evento)
-db.auth.getSession().then(({data})=>initApp(data.session));
-
-// Ouve mudancas (login, logout, refresh de token)
-db.auth.onAuthStateChange(async(event,session)=>{
-  if(event==='SIGNED_IN' && !_appLoaded) await initApp(session);
-  if(event==='SIGNED_OUT'){
-    _appLoaded=false;
-    document.getElementById('loading-screen').style.display='none';
-    document.getElementById('app').style.display='none';
-    document.getElementById('app').classList.remove('ready');
-    document.getElementById('login-wrap').style.display='flex';
   }
 });
 
@@ -944,7 +890,6 @@ let sitNotas=[],sitProd={cacau:0,gado:0,galinhas:0,ovos:0};
 let imUpdates=[],famData={analu:[],liz:[]};
 let outrosLista=[],outrosNotas=[],lancamentos=[];
 let compromissos=[];
-let clientes=[];
 
 // ══════════════════════════════════════
 // UTILS
@@ -974,7 +919,7 @@ function frObj(nome){
 // LOAD
 // ══════════════════════════════════════
 async function loadAll(){
-  const[t,h,l,lc,rc,rp,hp,me,mos,ct,sn,sp,iu,fam,ol,on_,cli]=await Promise.all([
+  const[t,h,l,lc,rc,rp,hp,me,mos,ct,sn,sp,iu,fam,ol,on_,comp]=await Promise.all([
     db.from('tasks').select('*').order('data'),
     db.from('habitos').select('*'),
     db.from('livros').select('*').order('created_at'),
@@ -991,7 +936,7 @@ async function loadAll(){
     db.from('familia').select('*').order('created_at'),
     db.from('outros_lista').select('*').order('created_at'),
     db.from('outros_notas').select('*').order('created_at',{ascending:false}),
-    db.from('clientes').select('*').order('nome'),
+    db.from('outros_lista').select('*').order('created_at').limit(0), // placeholder
   ]);
   tasks=t.data||[];
   (h.data||[]).forEach(r=>{if(!habCache[r.tipo])habCache[r.tipo]={};habCache[r.tipo][r.data]=r.id});
@@ -1004,7 +949,6 @@ async function loadAll(){
   imUpdates=iu.data||[];
   famData={analu:(fam.data||[]).filter(r=>r.pessoa==='analu'),liz:(fam.data||[]).filter(r=>r.pessoa==='liz')};
   outrosLista=ol.data||[];outrosNotas=on_.data||[];
-  clientes=cli.data||[];
   const{data:imD}=await db.from('imovel_data').select('*');
   (imD||[]).forEach(r=>{const el=document.getElementById('im-'+r.chave);if(el)el.value=r.valor});
   updateImBar();
@@ -1013,7 +957,7 @@ async function loadAll(){
 // ══════════════════════════════════════
 // NAV
 // ══════════════════════════════════════
-const SEC_TITLES={agenda:'Agenda',habitos:'Hábitos',calendario:'Calendário',financeiro:'Financeiro',rubim:'Rubim & Rocha',harrison:'Harrison Leite',maxima:'Máxima',cts:'CTs',sitio:'Sítio',imovel:'Imóvel',familia:'Família',outros:'Outros',clientes:'Clientes'};
+const SEC_TITLES={agenda:'Agenda',habitos:'Hábitos',calendario:'Calendário',financeiro:'Financeiro',rubim:'Rubim & Rocha',harrison:'Harrison Leite',maxima:'Máxima',cts:'CTs',sitio:'Sítio',imovel:'Imóvel',familia:'Família',outros:'Outros'};
 let weekOffset=0,filterFrente='Todas',ctAtivo=0;
 let finFrenteAtivo='global',finSubTab='receitas';
 let chartBarras=null,chartPizza=null,chartFluxo=null,chartEvolucao=null;
@@ -1038,7 +982,6 @@ function nav(id){
   else if(id==='imovel')renderImovel();
   else if(id==='familia')renderFamilia();
   else if(id==='outros')renderOutros();
-  else if(id==='clientes')renderClientes();
 }
 
 // ══════════════════════════════════════
@@ -1086,17 +1029,9 @@ function renderAgenda(){
     const ds2=dateStr(day);
     const dt=tasks.filter(t=>t.data===ds2&&(filterFrente==='Todas'||t.frente===filterFrente));
     const cnt=dt.length?`<span class="day-cnt">${dt.filter(t=>t.done).length}/${dt.length}</span>`:'';
-    const thtml=dt.length?dt.map(t=>{const fr=frObj(t.frente);
-    const priCor=t.prioridade==='Urgente'?'var(--red)':t.prioridade==='Alta'?'var(--accent)':'';
-    const priIcon=t.prioridade==='Urgente'?'🔴':t.prioridade==='Alta'?'🟡':'';
-    const cli=t.cliente_id?clientes.find(c=>c.id===t.cliente_id):null;
-    return`<div class="task-item">
+    const thtml=dt.length?dt.map(t=>{const fr=frObj(t.frente);return`<div class="task-item">
       <div class="chk ${t.done?'done':''}" onclick="toggleTask(${t.id})"></div>
-      <div style="flex:1;min-width:0">
-        <div class="t-nome ${t.done?'done':''}">${priIcon?priIcon+' ':''}${t.nome}</div>
-        ${t.hora||cli?`<div style="font-size:11px;color:var(--text3);margin-top:2px">${t.hora?'⏰ '+t.hora:''}${t.hora&&cli?' · ':''}${cli?'👤 '+cli.nome:''}</div>`:''}
-        ${t.descricao?`<div style="font-size:11px;color:var(--text3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.descricao}</div>`:''}
-      </div>
+      <div class="t-nome ${t.done?'done':''}">${t.nome}</div>
       <span class="pill" style="background:${fr.bg};color:${fr.txt}">${t.frente}</span>
       <button class="del" onclick="delTask(${t.id})">×</button>
     </div>`}).join(''):'<div class="empty-day">Sem tarefas</div>';
@@ -1150,7 +1085,32 @@ async function rmLivro(id){await dbDelete('livros',id);livros=livros.filter(l=>l
 // ══════════════════════════════════════
 // CALENDÁRIO
 // ══════════════════════════════════════
+async function loadGoogleCalendar(){
+  try{
+    const hoje = new Date();
+    const inicio = hoje.toISOString();
+    const fim = new Date(hoje.getTime()+30*24*60*60*1000).toISOString();
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent('lucasrochaadvogado@gmail.com')}/events?key=AIzaSyD9lqqjteTDGW8EGZSwDGXqdfVm5kJx038&timeMin=${inicio}&timeMax=${fim}&singleEvents=true&orderBy=startTime&maxResults=20`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if(data.items){
+      const gcalEl = document.getElementById('gcal-events');
+      if(!gcalEl) return;
+      gcalEl.innerHTML = data.items.length ? data.items.map(e=>{
+        const start = e.start.dateTime || e.start.date;
+        const dt = new Date(start);
+        const label = dt.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'2-digit'});
+        const hora = e.start.dateTime ? dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : 'Dia todo';
+        return `<div class="row-item">
+          <div class="ri-l"><div style="font-weight:600">${e.summary||'Sem título'}</div><div class="ri-sub">${label} · ${hora}</div></div>
+        </div>`;
+      }).join('') : '<div style="font-size:13px;color:var(--text3);padding:.5rem 0">Nenhum evento nos próximos 30 dias.</div>';
+    }
+  }catch(e){console.log('Calendar error:',e);}
+}
+
 function renderCalendario(){
+  loadGoogleCalendar();
   document.getElementById('cal-compromissos').innerHTML=compromissos.length
     ?[...compromissos].sort((a,b)=>a.data.localeCompare(b.data)).map((c,i)=>`
       <div class="row-item">
@@ -1573,271 +1533,11 @@ async function addOutroNota(){const t=document.getElementById('out-nota').value.
 async function rmOutroNota(id){await dbDelete('outros_notas',id);outrosNotas=outrosNotas.filter(n=>n.id!==id);renderOutros();}
 
 // ══════════════════════════════════════
-// MODAL — NOVA TAREFA
-// ══════════════════════════════════════
-function openTaskModal(prefDate){
-  const m=document.getElementById('modal-task');
-  m.classList.remove('hidden');
-  document.getElementById('mt-nome').value='';
-  document.getElementById('mt-data').value=prefDate||todayStr();
-  document.getElementById('mt-hora').value='';
-  document.getElementById('mt-desc').value='';
-  document.getElementById('mt-frente').value='Rubim & Rocha';
-  document.getElementById('mt-cliente').value='';
-  document.getElementById('mt-prioridade').value='Normal';
-  populateClienteDropdown('mt-cliente','');
-  document.getElementById('mt-nome').focus();
-}
-function closeTaskModal(){document.getElementById('modal-task').classList.add('hidden');}
-function populateClienteDropdown(elId,frenteFiltro){
-  const sel=document.getElementById(elId);
-  const filtrados=frenteFiltro&&frenteFiltro!=='Todas'?clientes.filter(c=>c.frente===frenteFiltro):clientes;
-  sel.innerHTML='<option value="">— Nenhum —</option>'+filtrados.map(c=>`<option value="${c.id}">${c.nome}</option>`).join('');
-}
-async function addTask(){
-  const nome=document.getElementById('mt-nome').value.trim();
-  const data=document.getElementById('mt-data').value;
-  const hora=document.getElementById('mt-hora').value;
-  const desc=document.getElementById('mt-desc').value.trim();
-  const frente=document.getElementById('mt-frente').value;
-  const clienteId=document.getElementById('mt-cliente').value||null;
-  const prioridade=document.getElementById('mt-prioridade').value;
-  if(!nome||!data)return;
-  const payload={nome,data,frente,done:false};
-  if(hora)payload.hora=hora;
-  if(desc)payload.descricao=desc;
-  if(clienteId)payload.cliente_id=parseInt(clienteId);
-  if(prioridade)payload.prioridade=prioridade;
-  const r=await dbInsert('tasks',payload);
-  if(r){tasks.push(r[0]);closeTaskModal();renderAgenda();}
-}
-
-// Atualiza dropdown de cliente ao trocar de frente no modal
-function onTaskFrenteChange(){
-  const frente=document.getElementById('mt-frente').value;
-  populateClienteDropdown('mt-cliente',frente);
-}
-
-// ══════════════════════════════════════
-// MODAL — NOVO CLIENTE
-// ══════════════════════════════════════
-function openClienteModal(id){
-  const m=document.getElementById('modal-cliente');
-  m.classList.remove('hidden');
-  document.getElementById('mc-id').value=id||'';
-  if(id){
-    const c=clientes.find(c=>c.id===id);
-    if(!c)return;
-    document.getElementById('mc-nome').value=c.nome;
-    document.getElementById('mc-tipo').value=c.tipo||'PJ';
-    document.getElementById('mc-frente').value=c.frente||'Rubim & Rocha';
-    document.getElementById('mc-contato').value=c.contato||'';
-    document.getElementById('mc-status').value=c.status||'Ativo';
-    document.getElementById('mc-obs').value=c.obs||'';
-  } else {
-    document.getElementById('mc-nome').value='';
-    document.getElementById('mc-tipo').value='PJ';
-    document.getElementById('mc-frente').value='Rubim & Rocha';
-    document.getElementById('mc-contato').value='';
-    document.getElementById('mc-status').value='Ativo';
-    document.getElementById('mc-obs').value='';
-  }
-  document.getElementById('mc-nome').focus();
-}
-function closeClienteModal(){document.getElementById('modal-cliente').classList.add('hidden');}
-async function saveCliente(){
-  const id=document.getElementById('mc-id').value;
-  const nome=document.getElementById('mc-nome').value.trim();
-  if(!nome)return;
-  const payload={
-    nome,
-    tipo:document.getElementById('mc-tipo').value,
-    frente:document.getElementById('mc-frente').value,
-    contato:document.getElementById('mc-contato').value.trim(),
-    status:document.getElementById('mc-status').value,
-    obs:document.getElementById('mc-obs').value.trim(),
-  };
-  if(id){
-    await dbUpdate('clientes',parseInt(id),payload);
-    const idx=clientes.findIndex(c=>c.id===parseInt(id));
-    if(idx>=0)clientes[idx]={...clientes[idx],...payload};
-  } else {
-    const r=await dbInsert('clientes',payload);
-    if(r)clientes.push(r[0]);
-  }
-  closeClienteModal();
-  renderClientes();
-}
-async function rmCliente(id){
-  if(!confirm('Remover este cliente?'))return;
-  await dbDelete('clientes',id);
-  clientes=clientes.filter(c=>c.id!==id);
-  renderClientes();
-}
-
-// ══════════════════════════════════════
-// CLIENTES — RENDER
-// ══════════════════════════════════════
-let cliFiltroAtivo='Todas';
-function filterClientes(f,btn){
-  cliFiltroAtivo=f;
-  document.querySelectorAll('#cli-filtros .fpill').forEach(b=>b.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  renderClientes();
-}
-const CLI_COR={
-  'Rubim & Rocha':['rgba(58,143,232,.2)','#3A8FE8'],
-  'Harrison Leite':['rgba(232,64,64,.2)','#E84040'],
-  'Máxima':['rgba(45,184,122,.2)','#2DB87A'],
-  'Outros':['rgba(90,90,88,.2)','#A0A09A'],
-};
-function renderClientes(){
-  const lista=cliFiltroAtivo==='Todas'?clientes:clientes.filter(c=>c.frente===cliFiltroAtivo);
-  const total=clientes.length;
-  const ativos=clientes.filter(c=>c.status==='Ativo').length;
-  const rubim=clientes.filter(c=>c.frente==='Rubim & Rocha').length;
-  const harrison=clientes.filter(c=>c.frente==='Harrison Leite').length;
-  document.getElementById('cli-metrics').innerHTML=`
-    <div class="metric m-blue"><div class="mv">${total}</div><div class="ml">Total de clientes</div></div>
-    <div class="metric m-green"><div class="mv pos">${ativos}</div><div class="ml">Ativos</div></div>
-    <div class="metric m-blue"><div class="mv">${rubim}</div><div class="ml">Rubim &amp; Rocha</div></div>
-    <div class="metric m-red"><div class="mv">${harrison}</div><div class="ml">Harrison Leite</div></div>`;
-  if(!lista.length){
-    document.getElementById('clientes-lista').innerHTML='<div style="font-size:13px;color:var(--text3);padding:1rem 0">Nenhum cliente cadastrado.</div>';
-    return;
-  }
-  document.getElementById('clientes-lista').innerHTML=lista.map(c=>{
-    const[bg,txt]=CLI_COR[c.frente]||CLI_COR['Outros'];
-    const iniciais=c.nome.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-    const statusCor=c.status==='Ativo'?'var(--green)':c.status==='Inativo'?'var(--text3)':'var(--accent)';
-    return`<div class="cli-card">
-      <div class="cli-av" style="background:${bg};color:${txt}">${iniciais}</div>
-      <div class="cli-info">
-        <div class="cli-name">${c.nome}</div>
-        <div class="cli-meta">
-          <span class="pill" style="background:${bg};color:${txt}">${c.frente}</span>
-          <span style="margin-left:6px;font-size:11px;color:var(--text3)">${c.tipo||''}</span>
-          ${c.contato?`<span style="margin-left:6px;font-size:11px;color:var(--text3)">· ${c.contato}</span>`:''}
-        </div>
-      </div>
-      <span style="font-size:11px;font-weight:700;color:${statusCor}">${c.status||'Ativo'}</span>
-      <button class="btn btn-sm" onclick="openClienteModal(${c.id})" style="padding:5px 10px">✎</button>
-      <button class="del" onclick="rmCliente(${c.id})">×</button>
-    </div>`;
-  }).join('');
-}
-
-// ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
 const now=new Date();
 document.getElementById('sb-date').textContent=DIAS[now.getDay()]+', '+now.getDate()+' de '+MESES[now.getMonth()]+' '+now.getFullYear();
-// Fechar modais com ESC
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeTaskModal();closeClienteModal();}});
+document.getElementById('t-data').value=todayStr();
 </script>
-
-<!-- MODAL NOVA TAREFA -->
-<div class="modal-overlay hidden" id="modal-task" onclick="if(event.target===this)closeTaskModal()">
-  <div class="modal-box">
-    <div class="modal-hdr">
-      <h3>Nova tarefa</h3>
-      <button class="modal-close" onclick="closeTaskModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="fg-full">
-        <label>Tarefa *</label>
-        <input type="text" id="mt-nome" placeholder="O que precisa ser feito?" onkeydown="if(event.key==='Enter')addTask()">
-      </div>
-      <div class="modal-grid">
-        <div class="fg-full">
-          <label>Data *</label>
-          <input type="date" id="mt-data">
-        </div>
-        <div class="fg-full">
-          <label>Horário</label>
-          <input type="time" id="mt-hora">
-        </div>
-      </div>
-      <div class="modal-grid">
-        <div class="fg-full">
-          <label>Frente</label>
-          <select id="mt-frente" onchange="onTaskFrenteChange()">
-            <option>Rubim & Rocha</option><option>Harrison Leite</option><option>Máxima</option>
-            <option>CT Super Ação</option><option>CT Rocha</option><option>Sítio</option>
-            <option>Imóvel</option><option>Hábito</option><option>Família</option><option>Outros</option>
-          </select>
-        </div>
-        <div class="fg-full">
-          <label>Prioridade</label>
-          <select id="mt-prioridade">
-            <option>Normal</option><option>Alta</option><option>Urgente</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg-full">
-        <label>Cliente</label>
-        <select id="mt-cliente"></select>
-      </div>
-      <div class="fg-full">
-        <label>Observações</label>
-        <textarea id="mt-desc" class="modal-textarea" placeholder="Detalhes, contexto, links relevantes..."></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeTaskModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="addTask()">+ Adicionar tarefa</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL NOVO CLIENTE -->
-<div class="modal-overlay hidden" id="modal-cliente" onclick="if(event.target===this)closeClienteModal()">
-  <div class="modal-box">
-    <div class="modal-hdr">
-      <h3 id="mc-titulo">Novo cliente</h3>
-      <button class="modal-close" onclick="closeClienteModal()">×</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="mc-id">
-      <div class="fg-full">
-        <label>Nome *</label>
-        <input type="text" id="mc-nome" placeholder="Nome completo ou razão social" onkeydown="if(event.key==='Enter')saveCliente()">
-      </div>
-      <div class="modal-grid">
-        <div class="fg-full">
-          <label>Tipo</label>
-          <select id="mc-tipo">
-            <option>PF</option><option>PJ</option><option>Município</option><option>Prefeitura</option>
-          </select>
-        </div>
-        <div class="fg-full">
-          <label>Status</label>
-          <select id="mc-status">
-            <option>Ativo</option><option>Inativo</option><option>Prospecto</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg-full">
-        <label>Frente</label>
-        <select id="mc-frente">
-          <option>Rubim & Rocha</option><option>Harrison Leite</option><option>Máxima</option><option>Outros</option>
-        </select>
-      </div>
-      <div class="fg-full">
-        <label>Contato (telefone / e-mail)</label>
-        <input type="text" id="mc-contato" placeholder="(73) 99999-0000 ou email@exemplo.com">
-      </div>
-      <div class="fg-full">
-        <label>Observações</label>
-        <textarea id="mc-obs" class="modal-textarea" placeholder="Notas sobre o cliente, histórico, observações..."></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeClienteModal()">Cancelar</button>
-      <button class="btn btn-p" onclick="saveCliente()">Salvar cliente</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
