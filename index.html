@@ -488,10 +488,7 @@ select option{background:var(--surface2);color:var(--text)}
 <!-- CALENDÁRIO -->
 <div class="sec" id="sec-calendario">
   <div class="page-hdr"><div class="page-hdr-l"><div class="accent-line"></div><h2>Calendário</h2><p>Google Calendar integrado</p></div></div>
-  <div class="card card-accent" style="margin-bottom:1rem">
-    <div class="card-title">Google Calendar — próximos 30 dias</div>
-    <div id="gcal-events"><div style="font-size:13px;color:var(--text3)">Carregando eventos...</div></div>
-  </div>
+  <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;align-items:center"><button class="btn btn-sm btn-p" id="v-mes" onclick="setCalView("mes")">Mês</button><button class="btn btn-sm" id="v-semana" onclick="setCalView("semana")">Semana</button><button class="btn btn-sm" id="v-dia" onclick="setCalView("dia")">Dia</button><button class="btn btn-sm" id="v-lista" onclick="setCalView("lista")">Lista</button><div style="flex:1"></div><button class="btn btn-sm" onclick="navCal(-1)">&#8592;</button><span id="cal-periodo" style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:700;color:var(--text);padding:0 8px"></span><button class="btn btn-sm" onclick="navCal(1)">&#8594;</button><button class="btn btn-sm" onclick="navCal(0)">Hoje</button></div><div class="card card-accent"><div id="gcal-events"><div style="font-size:13px;color:var(--text3)">Carregando...</div></div></div>
   <div class="card" style="margin-top:1rem">
     <div class="card-title">Próximos compromissos (agenda manual)</div>
     <div id="cal-compromissos"></div>
